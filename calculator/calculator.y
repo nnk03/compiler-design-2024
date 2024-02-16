@@ -33,7 +33,7 @@ program :
 
 statement :
           expr                  { printf("%g\n", $1); }
-          | VARIABLE '=' expr   { $1->value = $3; }
+          | VARIABLE '=' expr   { $1->value = $3; print_all();}
           ;
 
 expr :

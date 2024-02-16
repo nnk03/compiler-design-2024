@@ -1140,7 +1140,7 @@ yyreduce:
 
   case 5: /* statement: VARIABLE '=' expr  */
 #line 36 "calculator.y"
-                                { (yyvsp[-2].ptr)->value = (yyvsp[0].dval); }
+                                { (yyvsp[-2].ptr)->value = (yyvsp[0].dval); print_all();}
 #line 1145 "y.tab.c"
     break;
 

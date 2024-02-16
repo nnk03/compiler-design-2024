@@ -4,6 +4,13 @@
 #include "./symbol_table_definitions.h"
 
 extern void yyerror(char *s);
+void print_all(){
+	for(SymbolTable *curr = symtab; curr < &symtab[NSYMS]; curr++){
+		if(!curr->name)return;
+		printf("%s : %g\n", curr->name, curr->value);
+	}
+	
+}
 
 SymbolTable *symlook(char *name){
 	char *p;
