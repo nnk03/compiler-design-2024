@@ -6,50 +6,42 @@
 	.module	nooddspreg
 	.abicalls
 	.text
-	.section	.bss,"aw",@nobits
-
 	.globl	integer_value_x
+	.section	.bss,"aw",@nobits
 	.align	2
 	.type	integer_value_x, @object
 	.size	integer_value_x, 4
 integer_value_x:
 	.space	4
-
 	.globl	integer_value_y
 	.align	2
 	.type	integer_value_y, @object
 	.size	integer_value_y, 4
 integer_value_y:
 	.space	4
-
 	.globl	integer_value_z
 	.align	2
 	.type	integer_value_z, @object
 	.size	integer_value_z, 4
 integer_value_z:
 	.space	4
-
 	.globl	integer_array_int_arr
 	.align	2
 	.type	integer_array_int_arr, @object
 	.size	integer_array_int_arr, 40
 integer_array_int_arr:
 	.space	40
-
 	.globl	boolean_value_b
-	.align 2
 	.type	boolean_value_b, @object
 	.size	boolean_value_b, 1
 boolean_value_b:
 	.space	1
-
 	.globl	boolean_array_bool_array
 	.align	2
 	.type	boolean_array_bool_array, @object
 	.size	boolean_array_bool_array, 10
 boolean_array_bool_array:
 	.space	10
-
 	.align	2
 # this .rdata can still be below all the above things
 	.rdata
