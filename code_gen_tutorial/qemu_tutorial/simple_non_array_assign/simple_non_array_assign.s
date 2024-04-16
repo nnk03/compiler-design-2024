@@ -1,4 +1,4 @@
-	.file	1 "file.c"
+	.file	1 "simple_non_array_assign.c"
 	.section .mdebug.abi32
 	.previous
 	.nan	legacy
@@ -60,6 +60,10 @@ y:
 	.size	z, 4
 z:
 	.space	4
+	.rdata
+	.align	2
+$LC0:
+	.ascii	"%d\012\000"
 	.text
 	.align	2
 	.globl	main
@@ -68,24 +72,25 @@ z:
 	.ent	main
 	.type	main, @function
 main:
-	.frame	$fp,8,$31		# vars= 0, regs= 1/0, args= 0, gp= 0
-	.mask	0x40000000,-4
+	.frame	$fp,32,$31		# vars= 0, regs= 2/0, args= 16, gp= 8
+	.mask	0xc0000000,-4
 	.fmask	0x00000000,0
 	.set	noreorder
 	.set	nomacro
-	addiu	$sp,$sp,-8
-	sw	$fp,4($sp)
+	addiu	$sp,$sp,-32
+	sw	$31,28($sp)
+	sw	$fp,24($sp)
 	move	$fp,$sp
-
-	; lui	$2,%hi(x)
-	; li	$3,50			# 0x32
-	; sw	$3,%lo(x)($2)
+	lui	$28,%hi(__gnu_local_gp)
+	addiu	$28,$28,%lo(__gnu_local_gp)
+	.cprestore	16
 
 	lui	$2, %hi(x)
+	addiu	$2, $2, %lo(x)
 	addiu	$sp, $sp, -4
 	sw	$2, 0($sp)
 
-	li	$2, 100
+	li	$2, 1923
 	addiu	$sp, $sp, -4
 	sw	$2, 0($sp)
 
@@ -95,12 +100,25 @@ main:
 	lw	$2, 0($sp)
 	addiu	$sp, $sp, 4
 
-	sw	$3, %lo(x)($2)		# final assigning
+	sw	$3, 0($2)
 
+	lui	$2,%hi(x)
+	lw	$2,%lo(x)($2)
+	move	$5,$2
+	lui	$2,%hi($LC0)
+	addiu	$4,$2,%lo($LC0)
+	lw	$2,%call16(printf)($28)
+	move	$25,$2
+	.reloc	1f,R_MIPS_JALR,printf
+1:	jalr	$25
+	nop
+
+	lw	$28,16($fp)
 	move	$2,$0
 	move	$sp,$fp
-	lw	$fp,4($sp)
-	addiu	$sp,$sp,8
+	lw	$31,28($sp)
+	lw	$fp,24($sp)
+	addiu	$sp,$sp,32
 	jr	$31
 	nop
 
