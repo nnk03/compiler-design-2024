@@ -6,23 +6,23 @@
 	.module	nooddspreg
 	.abicalls
 	.text
-	.globl	arr
+	.globl	x
 	.section	.bss,"aw",@nobits
 	.align	2
-	.type	arr, @object
-	.size	arr, 400
-arr:
-	.space	400
-	.globl	in
-	.align	2
-	.type	in, @object
-	.size	in, 4
-in:
+	.type	x, @object
+	.size	x, 4
+x:
 	.space	4
+	.globl	y
+	.align	2
+	.type	y, @object
+	.size	y, 40
+y:
+	.space	40
 	.rdata
 	.align	2
 $LC0:
-	.ascii	"%d\012\000"
+	.ascii	"%d \012\000"
 	.text
 	.align	2
 	.globl	main
@@ -43,23 +43,17 @@ main:
 	lui	$28,%hi(__gnu_local_gp)
 	addiu	$28,$28,%lo(__gnu_local_gp)
 	.cprestore	16
-	lui	$2,%hi(in)
-	lw	$2,%lo(in)($2)
-	addiu	$3,$2,10
-	lui	$2,%hi(in)
-	sw	$3,%lo(in)($2)
-	lui	$2,%hi(in)
-	lw	$2,%lo(in)($2)
-	addiu	$3,$2,3
-	lui	$2,%hi(arr)
+	lui	$2,%hi(x)
+	sw	$0,%lo(x)($2)
+	lui	$2,%hi(x)
+	lw	$3,%lo(x)($2)
+	lui	$2,%hi(y)
 	sll	$3,$3,2
-	addiu	$2,$2,%lo(arr)
+	addiu	$2,$2,%lo(y)
 	addu	$2,$3,$2
-	li	$3,145			# 0x91
-	sw	$3,0($2)
-	lui	$2,%hi(arr)
-	addiu	$2,$2,%lo(arr)
-	lw	$2,52($2)
+	sw	$0,0($2)
+	lui	$2,%hi(y)
+	lw	$2,%lo(y)($2)
 	move	$5,$2
 	lui	$2,%hi($LC0)
 	addiu	$4,$2,%lo($LC0)
